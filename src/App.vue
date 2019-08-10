@@ -1,6 +1,5 @@
 <template>
 	<div id="app">
-        <div class="userinterface">
 		<header ref="top" class="topmenu">
 			<div class="topmenu__left">
 				<h1 class="topmenu__title">RG2R</h1>
@@ -8,16 +7,17 @@
 			</div>
 			<div class="topmenu__search"></div>
 		</header>
-		<nav class="navigation">
-			<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
-			<tree-view class="navigation__list" :data="getComputedList" :search="search" />
-		</nav>
-		<section class="content">
-			<router-view />
-		</section>
-        </div>
+		<div class="row">
+			<nav ref="navigation" class="navigation">
+				<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
+				<tree-view class="navigation__list" :data="getComputedList" :search="search" />
+			</nav>
+			<section class="content">
+				<router-view />
+			</section>
+		</div>
 
-		<footer class="footer">a</footer>
+		<footer class="footer">FOOTER</footer>
 	</div>
 </template>
 <script lang="ts">
@@ -27,6 +27,15 @@ import TreeView from "@/components/TreeView.vue";
 export default Vue.extend({
 	components: {
 		TreeView
+	},
+	mounted() {
+        var navigation:any =  this.$refs.navigation
+		addEventListener("scroll", e => {
+            if(scrollY > 55)
+            navigation.style.position = "fixed";
+            else
+			navigation.style.position = "static";
+		});
 	},
 	data() {
 		return {
@@ -205,18 +214,19 @@ input:hover {
 ::-webkit-scrollbar-thumb {
 	background-color: #555286;
 }
-
 #app {
+	width: 100vw;
+	height: auto;
+
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
 }
-.userinterface{
-    width: 100vw;
-    height: 100vh;
-    position: relative;
+.row {
+	display: flex;
+	justify-content: flex-end;
 }
 .topmenu {
-	position: absolute;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: 55px;
 	border-bottom: 1px solid #292a5933;
@@ -242,11 +252,10 @@ input:hover {
 }
 
 .navigation {
-	position: absolute;
-	top: 55px;
-	left: 0;
+    left: 0;
+    top: 0;
 	width: 25%;
-	height: calc(100% - 55px);
+	height: calc(100vh - 55px);
 	padding-left: 5%;
 
 	display: flex;
@@ -256,12 +265,10 @@ input:hover {
 }
 
 .content {
-	position: absolute;
-	top: 55px;
-	right: 0;
-
 	width: 75%;
-	min-height: calc(100% - 55px);
+	min-height: calc(100vh - 55px);
+	height: 2000px;
+	background-color: #EEEEEE;
 
 	padding-top: 20px;
 	padding-left: 50px;
@@ -283,6 +290,9 @@ input:hover {
 	flex: 1;
 }
 .footer {
-	background: grey;
+	background: #292a59;
+	color: white;
+
+	padding: 20px;
 }
 </style>

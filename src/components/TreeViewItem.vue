@@ -97,6 +97,7 @@ export default Vue.extend({
 	flex-direction: column;
 }
 .listitem {
+    margin-top: 5px;
 	display: block;
 	overflow: visible;
 }
