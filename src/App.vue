@@ -1,8 +1,12 @@
 <template>
 	<div id="app">
+        <div class="userinterface">
 		<header ref="top" class="topmenu">
-			<h1 class="topmenu__title">RG2R</h1>
-			<div class="topmenu__search">SEARCH</div>
+			<div class="topmenu__left">
+				<h1 class="topmenu__title">RG2R</h1>
+				<nav class="topmenu__topic">아 | 귀찮아 | 대충 | 여기겠지</nav>
+			</div>
+			<div class="topmenu__search"></div>
 		</header>
 		<nav class="navigation">
 			<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
@@ -11,6 +15,9 @@
 		<section class="content">
 			<router-view />
 		</section>
+        </div>
+
+		<footer class="footer">a</footer>
 	</div>
 </template>
 <script lang="ts">
@@ -26,52 +33,104 @@ export default Vue.extend({
 			search: "",
 			list: [
 				{
-					name: "test",
+					name: "구성 요소",
 					children: [
 						{
-							name: "test2"
-						},
-						{
-							name: "test3",
+							name: "Camera",
 							children: [
 								{
-									name: "test4"
-								},
-								{
-									name: "test5"
-								},
-								{
-									name: "test6"
-								},
-								{
-									name: "test7"
-								},
-								{
-									name: "test8"
-								},
-								{
-									name: "test9"
-								},
-								{
-									name: "test10"
-								},
-								{
-									name: "test11"
-								},
-								{
-									name: "test12"
-								},
-								{
-									name: "test13"
-								},
-								{
-									name: "test14"
+									name: "CameraBuilder",
+									children: []
 								}
 							]
+						},
+						{
+							name: "Object",
+							children: [
+								{
+									name: "ObjectBuilder",
+									children: []
+								}
+							]
+						},
+						{
+							name: "Scene",
+							children: []
+						},
+						{
+							name: "Component",
+							children: []
 						}
 					]
 				},
-				{ name: "RG" }
+				{
+					name: "시스템",
+					children: [
+						{
+							name: "GraphicManager",
+							children: []
+						},
+						{
+							name: "InputManager",
+							children: []
+						},
+						{
+							name: "SceneManager",
+							children: []
+						},
+						{
+							name: "TextureManager",
+							children: []
+						},
+						{
+							name: "TimeManager",
+							children: []
+						},
+						{
+							name: "WindowManager",
+							children: []
+						}
+					]
+				},
+				{
+					name: "컴포넌트",
+					children: [
+						{
+							name: "Effect",
+							children: [
+								{
+									name: "EffectInfo",
+									children: []
+								}
+							]
+						},
+						{
+							name: "Renderer",
+							children: [
+								{
+									name: "SpriteRenderer",
+									children: []
+								},
+								{
+									name: "ViewRenderer",
+									children: []
+								},
+								{
+									name: "TextRenderer",
+									children: []
+								},
+								{
+									name: "AnimationRenderer",
+									children: []
+								}
+							]
+						},
+						{
+							name: "Transform",
+							children: []
+						}
+					]
+				}
 			]
 		};
 	},
@@ -148,10 +207,12 @@ input:hover {
 }
 
 #app {
-	width: 100vw;
-	height: 100vh;
 }
-
+.userinterface{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
 .topmenu {
 	position: absolute;
 	top: 0;
@@ -166,16 +227,23 @@ input:hover {
 
 	padding: 0 5%;
 }
+.topmenu__left {
+	display: flex;
+	align-items: center;
+}
 
 .topmenu__title {
 	font-size: 1.3em;
 	font-weight: bold;
 	color: #555286;
 }
+.topmenu__topic {
+	margin-left: 20px;
+}
 
 .navigation {
 	position: absolute;
-	bottom: 0;
+	top: 55px;
 	left: 0;
 	width: 25%;
 	height: calc(100% - 55px);
@@ -183,7 +251,7 @@ input:hover {
 
 	display: flex;
 	flex-direction: column;
-	
+
 	user-select: none;
 }
 
@@ -193,6 +261,7 @@ input:hover {
 	right: 0;
 
 	width: 75%;
+	min-height: calc(100% - 55px);
 
 	padding-top: 20px;
 	padding-left: 50px;
@@ -212,5 +281,8 @@ input:hover {
 
 	overflow-y: scroll;
 	flex: 1;
+}
+.footer {
+	background: grey;
 }
 </style>

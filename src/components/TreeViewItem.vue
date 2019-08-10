@@ -4,7 +4,7 @@
 			<span v-html="text"></span>
 			<span class="folder">({{isOpen ? "－":"＋"}})</span>
 		</h4>
-		<transition-group name="show-fade" tag="ul" class="tab" v-on:enter="enter">
+		<transition-group name="show-fade" tag="ul" class="tab" v-on:enter="enter" v-on:leave="leave">
 			<tree-view-item
 				:highlight="highlight"
 				:data-index="index"
@@ -58,6 +58,9 @@ export default Vue.extend({
 		},
 		enter(el, done) {
 			el.style.transitionDelay = el.dataset.index * 50 + "ms";
+		},
+		leave(el, done) {
+			el.style.transitionDelay = (this.data.children.length-1-el.dataset.index) * 50 + "ms";
 		}
 	},
 	computed: {}
@@ -79,6 +82,7 @@ export default Vue.extend({
 .show-fade-leave {
 	opacity: 1;
 	transform: translateY(0);
+    height: 100%;
 }
 .bold {
 	cursor: pointer;
