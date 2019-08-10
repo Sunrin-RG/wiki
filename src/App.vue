@@ -6,10 +6,9 @@
 		</header>
 		<nav class="navigation">
 			<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
-			<tree-view class="navigation__list" :data="getComputedList" />
+			<tree-view class="navigation__list" :data="getComputedList" :search="search" />
 		</nav>
 		<section class="content">
-			{{list}}
 			<router-view />
 		</section>
 	</div>
@@ -82,6 +81,9 @@ export default Vue.extend({
 				var result: any[] = JSON.parse(JSON.stringify(this.list));
 				var findName = (item: any) => {
 					if (item.hasOwnProperty("children")) {
+						if (item.name.indexOf(this.search) != -1) {
+							return true;
+						}
 						var chk = false;
 						item.children = item.children.filter((y: any) => {
 							let value = findName(y);
@@ -181,6 +183,8 @@ input:hover {
 
 	display: flex;
 	flex-direction: column;
+	
+	user-select: none;
 }
 
 .content {

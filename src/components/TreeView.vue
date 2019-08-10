@@ -1,10 +1,6 @@
 <template>
 	<ul>
-		<tree-view-item
-			:data="item"
-			v-for="item in data"
-			:key="item.name"
-		></tree-view-item>
+		<tree-view-item :highlight="search" :data="item" :key="index" v-for="(item,index) in data"></tree-view-item>
 	</ul>
 </template>
 
@@ -16,8 +12,12 @@ export default Vue.extend({
 		TreeViewItem
 	},
 	props: {
-		data: Array
-	}
+		data: Array,
+		search: String
+	},
+	mounted() {
+		this.$el.innerHTML
+	},
 });
 </script>
 
@@ -25,5 +25,8 @@ export default Vue.extend({
 ul,
 ul * {
 	list-style: none;
+}
+.mark {
+	color: #555286 !important;
 }
 </style>

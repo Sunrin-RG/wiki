@@ -1,8 +1,12 @@
 <template>
 	<li class="listitem" v-if="isFolder">
-		<h4 @click="isOpen = !isOpen">{{ data.name }} <span class="folder">({{isOpen ? "－":"＋"}})</span></h4>
+		<h4 @click="isOpen = !isOpen">
+			<span v-html="text"></span>
+			<span class="folder">({{isOpen ? "－":"＋"}})</span>
+		</h4>
 		<transition-group name="show-fade" tag="ul" class="tab" v-on:enter="enter">
 			<tree-view-item
+				:highlight="highlight"
 				:data-index="index"
 				:data="item"
 				v-for="(item,index) in (isOpen ?data.children : [])"
@@ -10,7 +14,9 @@
 			></tree-view-item>
 		</transition-group>
 	</li>
-	<li class="listitem" v-else>{{ data.name }}</li>
+	<li class="listitem" ref="listitem" v-else>
+		<span v-html="text"></span>
+	</li>
 </template>
 
 <script>
@@ -19,7 +25,8 @@ import TreeViewItem from "@/components/TreeViewItem.vue";
 export default Vue.extend({
 	name: "TreeViewItem",
 	props: {
-		data: Object
+		data: Object,
+		highlight: String
 	},
 	components: {
 		TreeViewItem
@@ -27,17 +34,33 @@ export default Vue.extend({
 	data() {
 		return {
 			isFolder: false,
-			isOpen: false
+			isOpen: false,
+			text: ""
 		};
 	},
 	created() {
 		this.isFolder = this.data.hasOwnProperty("children");
+		this.setText(this.highlight);
+	},
+	watch: {
+		highlight(value) {
+			this.setText(value);
+		}
 	},
 	methods: {
+		setText(value) {
+			if (value == "") this.text = this.data.name;
+			else
+				this.text = this.data.name.replace(
+					this.highlight,
+					"<span class='mark'>" + this.highlight + "</span>"
+				);
+		},
 		enter(el, done) {
 			el.style.transitionDelay = el.dataset.index * 50 + "ms";
-		},
-	}
+		}
+	},
+	computed: {}
 });
 </script>
 
@@ -58,6 +81,7 @@ export default Vue.extend({
 	transform: translateY(0);
 }
 .bold {
+	cursor: pointer;
 	font-weight: bold;
 }
 .tab {
@@ -72,7 +96,8 @@ export default Vue.extend({
 	display: block;
 	overflow: visible;
 }
-.folder{
+.folder {
 	font-size: 0.8em;
 }
+
 </style>
