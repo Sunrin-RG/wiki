@@ -48,10 +48,10 @@ export default Vue.extend({
 				"px";
 		});
 		addEventListener("touchend", e => {
-			if (startX - endX > 200) {
+			if (startX - endX > innerWidth*0.3) {
 				currentLeft = -innerWidth;
 				navigation.style.left = "-100%";
-			} else if (startX - endX < -200) {
+			} else if (startX - endX < -innerWidth*0.3) {
 				currentLeft = 0;
 				navigation.style.left = "0px";
 			} else {
