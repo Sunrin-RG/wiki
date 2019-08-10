@@ -34,23 +34,28 @@ export default Vue.extend({
 			else if (innerWidth > 480) navigation.style.position = "static";
 		});
 		var startX: number;
-        var endX: number;
-        var currentLeft = -innerWidth;
+		var endX: number;
+		var currentLeft = -innerWidth;
 		addEventListener("touchstart", e => {
 			startX = e.touches[0].clientX;
 		});
 		addEventListener("touchmove", e => {
-            endX = e.touches[0].clientX;
-            var value = currentLeft-startX+endX
-            navigation.style.left = (value < -innerWidth ? -innerWidth : (value > 0 ? 0 : value))+"px"
+			endX = e.touches[0].clientX;
+			var value = currentLeft - startX + endX;
+			navigation.style.left =
+				(value < -innerWidth ? -innerWidth : value > 0 ? 0 : value) +
+				"px";
 		});
 		addEventListener("touchend", e => {
 			if (startX - endX > 200) {
-                currentLeft = -innerWidth;
+				currentLeft = -innerWidth;
 				navigation.style.left = "-100%";
 			} else if (startX - endX < -200) {
-                currentLeft = 0;
+				currentLeft = 0;
 				navigation.style.left = "0px";
+			} else {
+				currentLeft = -innerWidth;
+				navigation.style.left = "-100%";
 			}
 		});
 	},
@@ -318,23 +323,23 @@ input:hover {
 	}
 	.navigation {
 		position: fixed;
-        top:0;
+		top: 0;
 		left: -100%;
 		padding: 10px;
-        height: 100%;
-        background-color: #292a59;
-        color: white;
+		height: 100%;
+		background-color: #292a59;
+		color: white;
 		width: 100%;
-        transition: 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+		transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 	}
 	.content {
 		padding: 0;
 		width: 100%;
 	}
-    .navigation__filter{
-        background-color: #292a59;
-        color: white;
-        border: 1px solid white !important;
-    }
+	.navigation__filter {
+		background-color: #292a59;
+		color: white;
+		border: 1px solid white !important;
+	}
 }
 </style>
