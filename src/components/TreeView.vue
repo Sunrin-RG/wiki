@@ -1,5 +1,5 @@
 <template>
-	<ul>
+	<ul class="treeview">
 		<tree-view-item :highlight="search" :data="item" :key="index" v-for="(item,index) in data"></tree-view-item>
 	</ul>
 </template>
@@ -28,5 +28,8 @@ ul * {
 }
 .mark {
 	color: #555286 !important;
+}
+.treeview{
+    font-size: 1.1em;
 }
 </style>

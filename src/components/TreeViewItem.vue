@@ -4,15 +4,14 @@
 			<span v-html="text"></span>
 			<span class="folder">({{isOpen ? "－":"＋"}})</span>
 		</h4>
-		<transition-group name="show-fade" tag="ul" class="tab" v-on:enter="enter" v-on:leave="leave">
+        <ul class="tab" v-if="isOpen">
 			<tree-view-item
 				:highlight="highlight"
 				:data-index="index"
 				:data="item"
-				v-for="(item,index) in (isOpen ?data.children : [])"
+				v-for="(item,index) in data.children"
 				:key="item.name"
-			></tree-view-item>
-		</transition-group>
+			></tree-view-item></ul>
 	</li>
 	<li class="listitem" ref="listitem" v-else>
 		<span v-html="text"></span>
@@ -68,22 +67,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.show-fade-enter-active,
-.show-fade-leave-active {
-	transition: 0.5s;
-}
-.show-fade-enter,
-.show-fade-leave-to {
-	opacity: 0;
-	transform: translateY(-10px);
-	height: 0;
-}
-.show-fade-enter-to,
-.show-fade-leave {
-	opacity: 1;
-	transform: translateY(0);
-    height: 100%;
-}
 .bold {
 	cursor: pointer;
 	font-weight: bold;
@@ -95,6 +78,8 @@ export default Vue.extend({
 
 	display: flex;
 	flex-direction: column;
+    
+    font-size: 0.9em;
 }
 .listitem {
     margin-top: 5px;
