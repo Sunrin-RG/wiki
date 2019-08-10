@@ -1,4 +1,4 @@
 module.exports = {
-	publicPath: "/wiki",
+	publicPath: "/wiki/",
 	outputDir: "docs"
 };
