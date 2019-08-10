@@ -5,10 +5,11 @@
 			<div class="topmenu__search">SEARCH</div>
 		</header>
 		<nav class="navigation">
-			<input class="navigation__filter" type="text" placeholder="Filter by title" />
-			<tree-view class="navigation__list" :data="list" />
+			<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
+			<tree-view class="navigation__list" :data="getComputedList" />
 		</nav>
 		<section class="content">
+			{{list}}
 			<router-view />
 		</section>
 	</div>
@@ -23,6 +24,7 @@ export default Vue.extend({
 	},
 	data() {
 		return {
+			search: "",
 			list: [
 				{
 					name: "test",
@@ -38,15 +40,69 @@ export default Vue.extend({
 								},
 								{
 									name: "test5"
+								},
+								{
+									name: "test6"
+								},
+								{
+									name: "test7"
+								},
+								{
+									name: "test8"
+								},
+								{
+									name: "test9"
+								},
+								{
+									name: "test10"
+								},
+								{
+									name: "test11"
+								},
+								{
+									name: "test12"
+								},
+								{
+									name: "test13"
+								},
+								{
+									name: "test14"
 								}
 							]
 						}
 					]
-				}
+				},
+				{ name: "RG" }
 			]
 		};
 	},
-	mounted() {}
+	computed: {
+		getComputedList(): any {
+			if (this.search.length != 0) {
+				var result: any[] = JSON.parse(JSON.stringify(this.list));
+				var findName = (item: any) => {
+					if (item.hasOwnProperty("children")) {
+						var chk = false;
+						item.children = item.children.filter((y: any) => {
+							let value = findName(y);
+							if (!chk) chk = value;
+							return value;
+						});
+						return chk;
+					} else {
+						if (item.name.indexOf(this.search) != -1) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+				};
+				return result.filter((x: any) => {
+					return findName(x);
+				});
+			} else return this.list;
+		}
+	}
 });
 </script>
 
