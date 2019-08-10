@@ -48,7 +48,7 @@ export default Vue.extend({
 			if (startX - endX > 200) {
                 currentLeft = -innerWidth;
 				navigation.style.left = "-100%";
-			} else if (startX - endX < 200) {
+			} else if (startX - endX < -200) {
                 currentLeft = 0;
 				navigation.style.left = "0px";
 			}
