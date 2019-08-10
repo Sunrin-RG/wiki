@@ -38,6 +38,7 @@ export default Vue.extend({
 		var currentLeft = -innerWidth;
 		addEventListener("touchstart", e => {
 			startX = e.touches[0].clientX;
+            endX = startX;
 		});
 		addEventListener("touchmove", e => {
 			endX = e.touches[0].clientX;
@@ -54,8 +55,7 @@ export default Vue.extend({
 				currentLeft = 0;
 				navigation.style.left = "0px";
 			} else {
-				currentLeft = -innerWidth;
-				navigation.style.left = "-100%";
+				navigation.style.left = currentLeft+"px";
 			}
 		});
 	},
@@ -289,7 +289,6 @@ input:hover {
 .content {
 	width: 75%;
 	min-height: calc(100vh - 55px);
-	height: 2000px;
 
 	padding-top: 20px;
 	padding-left: 50px;
@@ -332,6 +331,20 @@ input:hover {
 		width: 100%;
 		transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 	}
+    .navigation::before{
+        content: ">";
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        position: absolute;
+        bottom: 50%;
+        right: -10px;
+        width: 10px;
+        height: 50px;
+        transform: translate3d(0,50%,0);
+        background-color: #292a59;
+        color: white;
+    }
 	.content {
 		padding: 0;
 		width: 100%;
