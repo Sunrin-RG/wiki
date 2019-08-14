@@ -1,6 +1,6 @@
 <template>
 	<ul class="treeview">
-		<tree-view-item :highlight="search" :data="item" :key="index" v-for="(item,index) in data"></tree-view-item>
+		<tree-view-item :highlight="search" :data="item" :key="item.name" v-for="item in data"></tree-view-item>
 	</ul>
 </template>
 

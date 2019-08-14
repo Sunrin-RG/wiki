@@ -63,7 +63,8 @@ export default Vue.extend({
 		return {
 			search: "",
 			isShowMenu: false,
-			list: [{name:"TEST",content:"# TESTCONTENT"},
+			list: [
+                {name:"TEST",content:"# TESTCONTENT"},
 				{
 					name: "구성 요소",
 					children: [
