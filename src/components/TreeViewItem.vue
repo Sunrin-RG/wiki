@@ -14,7 +14,7 @@
 			></tree-view-item>
 		</ul>
 	</li>
-	<li class="listitem" ref="listitem" v-else>
+	<li class="listitem" ref="listitem" @click="gotoDocs" v-else>
 		<span v-html="text"></span>
 	</li>
 </template>
@@ -58,6 +58,9 @@ export default Vue.extend({
 		}
 	},
 	methods: {
+        gotoDocs(){
+            this.$store.state.currentContent = this.data
+        },
 		setText(value) {
 			if (value == "") this.text = this.data.name;
 			else

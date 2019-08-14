@@ -63,7 +63,7 @@ export default Vue.extend({
 		return {
 			search: "",
 			isShowMenu: false,
-			list: [
+			list: [{name:"TEST",content:"# TESTCONTENT"},
 				{
 					name: "구성 요소",
 					children: [
@@ -206,12 +206,14 @@ export default Vue.extend({
 #00002f
 */
 * {
-	padding: 0;
-	margin: 0;
 	box-sizing: border-box;
 	font-family: "Nanum Gothic", sans-serif;
 	letter-spacing: 0.075em;
 	line-height: 1.4em;
+}
+body{
+    padding: 0;
+    margin: 0;
 }
 
 input {
@@ -258,6 +260,11 @@ input:hover {
 	align-items: center;
 
 	padding: 0 5%;
+    margin: 0;
+}
+.topmenu *{
+    margin: 0;
+    padding: 0;
 }
 .topmenu__left {
 	display: flex;
@@ -284,6 +291,10 @@ input:hover {
 	flex-direction: column;
 
 	user-select: none;
+}
+.navigation *{
+    margin:0;
+    padding:0;
 }
 
 .content {

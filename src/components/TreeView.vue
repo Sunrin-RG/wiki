@@ -18,7 +18,7 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style scoped>
 ul,
 ul * {
 	list-style: none;
