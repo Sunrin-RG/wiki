@@ -26,7 +26,10 @@ import TreeView from "@/components/TreeView.vue";
 export default Vue.extend({
 	components: {
 		TreeView
-	},
+    },
+    created(){
+        this.$store.dispatch("GET_DOCS");
+    },
 	mounted() {
 		var navigation: any = this.$refs.navigation;
 		addEventListener("scroll", e => {
@@ -169,7 +172,7 @@ export default Vue.extend({
 	computed: {
 		getComputedList(): any {
 			if (this.search.length != 0) {
-				var result: any[] = JSON.parse(JSON.stringify(this.list));
+				var result: any[] = JSON.parse(JSON.stringify(this.getList));
 				var findName = (item: any) => {
 					if (item.hasOwnProperty("children")) {
 						if (item.name.indexOf(this.search) != -1) {
@@ -193,8 +196,11 @@ export default Vue.extend({
 				return result.filter((x: any) => {
 					return findName(x);
 				});
-			} else return this.list;
-		}
+			} else return this.getList;
+        },
+        getList(){
+            return this.$store.state.list
+        }
 	}
 });
 </script>

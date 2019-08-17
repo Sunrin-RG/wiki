@@ -15,9 +15,6 @@ export default Vue.extend({
 		data: Array,
 		search: String
 	},
-	mounted() {
-		this.$el.innerHTML
-	},
 });
 </script>
 
