@@ -1,8 +1,18 @@
 <template>
-	<div class="home"></div>
+	<div class="home" v-html="getCurrentContent"></div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import TreeView from "@/components/TreeView.vue";
-export default Vue.extend({});
+import marked from 'marked';
+export default Vue.extend({
+	computed:{
+		getCurrentContent(){
+            return marked(this.$store.state.currentContent.content)
+		}
+	}
+});
 </script>
+
+<style>
+</style>
