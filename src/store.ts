@@ -3,17 +3,18 @@ import Vuex from "vuex";
 import axios from "axios";
 
 Vue.use(Vuex);
-
-interface Doc {
-	_id: string;
-	name: string;
-	category?: string;
-	parentId?: string;
-}
 interface DocTree {
 	_id: string;
 	name: string;
 	children?: DocTree[];
+	content?: string;
+}
+interface Doc {
+	_id: string;
+	name: string;
+	content?: string;
+	category?: string;
+	parentId?: string;
 }
 
 export default new Vuex.Store({
@@ -71,7 +72,7 @@ export default new Vuex.Store({
 								treeDocs[index].children!.push(doc);
 							}
 						} else if (doc.hasOwnProperty("parentId")) {
-							treeDocsAppendByID(doc.parentId!,treeDocs,doc);
+							treeDocsAppendByID(doc.parentId!, treeDocs, doc);
 						}
 					});
 					commit("setDocs", treeDocs);
