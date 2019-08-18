@@ -19,7 +19,10 @@ interface Doc {
 
 export default new Vuex.Store({
 	state: {
-		list: []
+        list: [],
+        currentDocs: {
+            content:""
+        },
 	},
 	mutations: {
 		setDocs(state, data) {

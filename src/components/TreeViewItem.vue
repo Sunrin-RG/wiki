@@ -59,7 +59,7 @@ export default Vue.extend({
 	},
 	methods: {
         gotoDocs(){
-            this.$store.state.currentContent = this.data
+            this.$store.state.currentDocs = this.data
         },
 		setText(value) {
 			if (value == "") this.text = this.data.name;
