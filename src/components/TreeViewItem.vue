@@ -48,26 +48,33 @@ export default Vue.extend({
 			if (this.isFolder && value != "") {
 				this.isOpen =
 					this.data.children.findIndex(
-						x => x.name.indexOf(value) != -1
-					) != -1 || this.data.name.indexOf(value) != -1;
-			}
-			else{
-				this.isOpen = false
+						x =>
+							x.name
+								.toLocaleLowerCase()
+								.indexOf(value.toLocaleLowerCase()) != -1
+					) != -1 ||
+					this.data.name
+						.toLocaleLowerCase()
+						.indexOf(value.toLocaleLowerCase()) != -1;
+			} else {
+				this.isOpen = false;
 			}
 			this.setText(value);
 		}
 	},
 	methods: {
-        gotoDocs(){
-            this.$store.state.currentDocs = this.data
-        },
+		gotoDocs() {
+			this.$store.state.currentDocs = this.data;
+		},
 		setText(value) {
 			if (value == "") this.text = this.data.name;
-			else
-				this.text = this.data.name.replace(
-					this.highlight,
-					"<span class='mark'>" + this.highlight + "</span>"
+			else{
+                let reg = new RegExp(this.highlight, "gi")
+                this.text = this.data.name.replace(
+                    reg,
+					"<span class='mark'>" + reg.exec(this.data.name) + "</span>"
 				);
+            }
 		},
 		enter(el, done) {
 			el.style.transitionDelay = el.dataset.index * 50 + "ms";

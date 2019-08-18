@@ -23,9 +23,6 @@ ul,
 ul * {
 	list-style: none;
 }
-.mark {
-	color: #555286 !important;
-}
 .treeview{
     font-size: 1.1em;
 }

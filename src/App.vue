@@ -4,7 +4,12 @@
 			<div class="topmenu__left">
 				<h1 class="topmenu__title">RG2R</h1>
 				<nav class="topmenu__topic">
-					<span class="topmenu__topic__item" v-for="(item,idx) in getList" :key="item.name" @click="index = idx">{{item.name}}</span>
+					<span
+						class="topmenu__topic__item"
+						v-for="(item,idx) in getList"
+						:key="item.name"
+						@click="index = idx"
+					>{{item.name}}</span>
 				</nav>
 			</div>
 			<div class="topmenu__search"></div>
@@ -80,18 +85,31 @@ export default Vue.extend({
 					);
 					var findName = (item: any) => {
 						if (item.hasOwnProperty("children")) {
-							if (item.name.indexOf(this.search) != -1) {
+							if (
+								item.name
+									.toLocaleLowerCase()
+									.indexOf(this.search.toLocaleLowerCase()) !=
+								-1
+							) {
 								return true;
+							} else {
+								var chk = false;
+								item.children = item.children.filter(
+									(y: any) => {
+										let value = findName(y);
+										if (!chk) chk = value;
+										return value;
+									}
+								);
+								return chk;
 							}
-							var chk = false;
-							item.children = item.children.filter((y: any) => {
-								let value = findName(y);
-								if (!chk) chk = value;
-								return value;
-							});
-							return chk;
 						} else {
-							if (item.name.indexOf(this.search) != -1) {
+							if (
+								item.name
+									.toLocaleLowerCase()
+									.indexOf(this.search.toLocaleLowerCase()) !=
+								-1
+							) {
 								return true;
 							} else {
 								return false;
@@ -102,9 +120,9 @@ export default Vue.extend({
 						return findName(x);
 					});
 				} else return this.getList[this.index].children;
-			} else{
-                 return []
-            };
+			} else {
+				return [];
+			}
 		},
 		getList() {
 			return this.$store.state.list;
@@ -124,6 +142,7 @@ export default Vue.extend({
 	font-family: "Nanum Gothic", sans-serif;
 	letter-spacing: 0.075em;
 	line-height: 1.4em;
+	color: #292a59;
 }
 body {
 	padding: 0;
@@ -193,13 +212,13 @@ input:hover {
 .topmenu__topic {
 	margin-left: 20px;
 }
-.topmenu__topic__item{
-    cursor: pointer;
-    margin: 0 5px;
-    font-weight: bold;
+.topmenu__topic__item {
+	cursor: pointer;
+	margin: 0 5px;
+	font-weight: bold;
 }
-.topmenu__topic__item:hover{
-    color: #555286;
+.topmenu__topic__item:hover {
+	color: #555286;
 }
 
 .navigation {
@@ -260,10 +279,15 @@ input:hover {
 		padding: 10px;
 		height: 100%;
 		background-color: #292a59;
-		color: white;
 		width: 100%;
 		transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 	}
+    .navigation *{
+		color: white;
+    }
+    .navigation .mark{
+        color: #292a59;
+    }
 	.navigation::before {
 		content: ">";
 		display: flex;
@@ -279,7 +303,7 @@ input:hover {
 		color: white;
 	}
 	.content {
-		padding: 0;
+		padding: 10px;
 		width: 100%;
 	}
 	.navigation__filter {
@@ -287,5 +311,9 @@ input:hover {
 		color: white;
 		border: 1px solid white !important;
 	}
+}
+
+.mark {
+	background-color: yellow;
 }
 </style>
