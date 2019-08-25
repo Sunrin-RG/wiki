@@ -35,7 +35,7 @@ export default new Vuex.Store({
 				.get(
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs"
 				)
-				.then(data => {
+				.then((data:{data:Doc[]}) => {
 					var docs: Doc[] = data.data;
 					var treeDocs: DocTree[] = [];
 
