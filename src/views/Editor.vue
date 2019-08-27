@@ -14,11 +14,17 @@ export default Vue.extend({
 		return {
 			text: "" as string
 		};
-	},
+    },
+    created(){
+        this.text = this.getCurrentDocs.content
+    },
 	computed: {
 		getCurrentContent(): string {
 			return marked(this.text);
-		}
+        },
+        getCurrentDocs(){
+            return this.$store.state.currentDocs
+        }
 	}
 });
 </script>
@@ -27,11 +33,11 @@ export default Vue.extend({
 .editor {
 	widows: 100%;
 }
-.editor__content{
-    word-wrap: break-word;
+.editor__content {
+	word-wrap: break-word;
 }
-.editor__field{
-    width: 100%;
-    height: 500px;
+.editor__field {
+	width: 100%;
+	height: 500px;
 }
 </style>
