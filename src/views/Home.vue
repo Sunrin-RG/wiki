@@ -1,5 +1,8 @@
 <template>
-	<div class="home" v-html="getCurrentContent"></div>
+	<div class="home">
+        <div class="home__content"  v-html="getCurrentContent"></div>
+        <router-link to="/edit" class="home__edit">EDIT</router-link>
+    </div>
 </template>
 <script lang="ts">
 import Vue from "vue";

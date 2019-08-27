@@ -1,6 +1,11 @@
 <template>
 	<div class="editor">
 		<div class="editor__content" v-html="getCurrentContent"></div>
+        <div class="editor__row">
+            <input class="editor__category" type="text">
+            <input class="editor__parentId" type="text">
+        </div>
+        <input  class="editor__title" type="text">
 		<textarea class="editor__field" v-model="text"></textarea>
 	</div>
 </template>
@@ -35,6 +40,14 @@ export default Vue.extend({
 }
 .editor__content {
 	word-wrap: break-word;
+}
+.editor__category, .editor__parentId{
+    width: 50%;
+    padding: 10px;
+}
+.editor__title{
+    width : 100%;
+    padding: 10px;
 }
 .editor__field {
 	width: 100%;
