@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
-        <div class="home__content"  v-html="getCurrentContent"></div>
-        <router-link to="/edit" class="home__edit">EDIT</router-link>
+        <div class="home__content" v-html="getCurrentContent"></div>
+        <router-link to="/edit" class="home__edit" v-if="getCurrentContent">EDIT</router-link>
     </div>
 </template>
 <script lang="ts">

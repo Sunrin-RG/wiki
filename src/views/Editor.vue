@@ -3,15 +3,16 @@
 		<div class="editor__content" v-html="getCurrentContent"></div>
         <div class="editor__row">
             <input class="editor__category" type="text">
-            <input class="editor__parentId" type="text">
+            <ParentSelector class="editor__parentId" type="text"/>
         </div>
-        <input  class="editor__title" type="text">
+        <input class="editor__title" type="text">
 		<textarea class="editor__field" v-model="text"></textarea>
+        <button class="editor__send">EDIT</button>
 	</div>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import TreeView from "@/components/TreeView.vue";
+import ParentSelector from "@/components/ParentSelector.vue";
 import marked from "marked";
 
 export default Vue.extend({
@@ -21,13 +22,16 @@ export default Vue.extend({
 		};
     },
     created(){
-        this.text = this.getCurrentDocs.content
+        this.text = this.getCurrentDocs.content as string
+    },
+    components:{
+        ParentSelector
     },
 	computed: {
 		getCurrentContent(): string {
 			return marked(this.text);
         },
-        getCurrentDocs(){
+        getCurrentDocs(): any{
             return this.$store.state.currentDocs
         }
 	}
@@ -41,9 +45,12 @@ export default Vue.extend({
 .editor__content {
 	word-wrap: break-word;
 }
-.editor__category, .editor__parentId{
+.editor__category{
     width: 50%;
     padding: 10px;
+}
+ .editor__parentId{
+    width: 50%;
 }
 .editor__title{
     width : 100%;
@@ -52,5 +59,13 @@ export default Vue.extend({
 .editor__field {
 	width: 100%;
 	height: 500px;
+}
+.editor__send{
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    font-size: 1.2em;
+    background-color: #292a59;
+	outline-color: #555286;
 }
 </style>
