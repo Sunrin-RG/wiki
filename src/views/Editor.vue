@@ -1,13 +1,19 @@
 <template>
 	<div class="editor">
 		<div class="editor__content" v-html="getCurrentContent"></div>
-        <div class="editor__row">
-            <input class="editor__category" type="text">
-            <ParentSelector class="editor__parentId" type="text"/>
-        </div>
-        <input class="editor__title" type="text">
-		<textarea class="editor__field" v-model="text"></textarea>
-        <button class="editor__send">EDIT</button>
+		<div class="editor__row">
+			<input
+				v-model="category"
+				class="editor__category"
+				:disabled="parentSelect.length > 0"
+				type="text"
+                placeholder="카테고리"
+			/>
+			<ParentSelector v-model="parentSelect" :init="parentSelect" class="editor__parentId" type="text" />
+		</div>
+		<input class="editor__title"  v-model="name" type="text" placeholder="제목"/>
+		<textarea class="editor__field" v-model="text" placeholder="내용"></textarea>
+		<button class="editor__send">EDIT</button>
 	</div>
 </template>
 <script lang="ts">
@@ -18,22 +24,36 @@ import marked from "marked";
 export default Vue.extend({
 	data() {
 		return {
-			text: "" as string
+			text: "" as string,
+			parentSelect: "",
+            category: "",
+            name: ""
 		};
-    },
-    created(){
-        this.text = this.getCurrentDocs.content as string
-    },
-    components:{
-        ParentSelector
-    },
+	},
+	watch: {
+		parentSelect(value: string) {
+			if (value.length > 0) {
+				this.category = "";
+			}
+		}
+	},
+	created() {
+        if(!this.getCurrentDocs._id) this.$router.replace('/')
+		this.text = this.getCurrentDocs.content as string;
+		this.parentSelect = this.getCurrentDocs.parentId as string;
+		this.category = this.getCurrentDocs.category as string;
+		this.name = this.getCurrentDocs.name as string;
+	},
+	components: {
+		ParentSelector
+	},
 	computed: {
 		getCurrentContent(): string {
 			return marked(this.text);
-        },
-        getCurrentDocs(): any{
-            return this.$store.state.currentDocs
-        }
+		},
+		getCurrentDocs(): any {
+			return this.$store.state.currentDocs;
+		}
 	}
 });
 </script>
@@ -45,27 +65,27 @@ export default Vue.extend({
 .editor__content {
 	word-wrap: break-word;
 }
-.editor__category{
-    width: 50%;
-    padding: 10px;
+.editor__category {
+	width: 50%;
+	padding: 10px;
 }
- .editor__parentId{
-    width: 50%;
+.editor__parentId {
+	width: 50%;
 }
-.editor__title{
-    width : 100%;
-    padding: 10px;
+.editor__title {
+	width: 100%;
+	padding: 10px;
 }
 .editor__field {
 	width: 100%;
 	height: 500px;
 }
-.editor__send{
-    color: white;
-    border: none;
-    padding: 5px 20px;
-    font-size: 1.2em;
-    background-color: #292a59;
+.editor__send {
+	color: white;
+	border: none;
+	padding: 5px 20px;
+	font-size: 1.2em;
+	background-color: #292a59;
 	outline-color: #555286;
 }
 </style>

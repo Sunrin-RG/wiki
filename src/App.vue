@@ -36,12 +36,12 @@ export default Vue.extend({
 	},
 	created() {
 		this.$store.dispatch("GET_DOCS");
-    },
-    watch:{
-        index(value){
-            this.$store.state.index = value
-        }
-    },
+	},
+	watch: {
+		index(value) {
+			this.$store.state.index = value;
+		}
+	},
 	mounted() {
 		var navigation: any = this.$refs.navigation;
 		addEventListener("scroll", e => {
@@ -287,12 +287,12 @@ input:hover {
 		width: 100%;
 		transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 	}
-    .navigation *{
+	.navigation * {
 		color: white;
-    }
-    .navigation .mark{
-        color: #292a59;
-    }
+	}
+	.navigation .mark {
+		color: #292a59;
+	}
 	.navigation::before {
 		content: ">";
 		display: flex;
