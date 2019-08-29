@@ -8,6 +8,7 @@
 import Vue from "vue";
 import TreeViewItem from "@/components/TreeViewItem.vue";
 export default Vue.extend({
+    name: "TreeView",
 	components: {
 		TreeViewItem
 	},

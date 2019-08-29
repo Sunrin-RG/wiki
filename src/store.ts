@@ -19,12 +19,17 @@ interface Doc {
 
 export default new Vuex.Store({
 	state: {
-        list: [],
-        currentDocs: {
-            content:""
-        },
+		list: [],
+		flatList: [],
+		index: 0,
+		currentDocs: {
+			content: ""
+		}
 	},
 	mutations: {
+		setFlatDocs(state, data) {
+			state.flatList = data;
+		},
 		setDocs(state, data) {
 			state.list = data;
 		}
@@ -35,8 +40,9 @@ export default new Vuex.Store({
 				.get(
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs"
 				)
-				.then((data:{data:Doc[]}) => {
+				.then((data: { data: Doc[] }) => {
 					var docs: Doc[] = data.data;
+					commit("setFlatDocs", docs);
 					var treeDocs: DocTree[] = [];
 
 					function treeDocsAppendByID(
