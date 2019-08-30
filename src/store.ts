@@ -41,7 +41,7 @@ export default new Vuex.Store({
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs"
 				)
 				.then((data: { data: Doc[] }) => {
-					var docs: Doc[] = data.data;
+                    var docs: Doc[] = data.data;
 					commit("setFlatDocs", docs);
 					var treeDocs: DocTree[] = [];
 
@@ -66,7 +66,7 @@ export default new Vuex.Store({
 					}
 
 					docs.forEach((doc: Doc) => {
-						if (doc.hasOwnProperty("category")) {
+						if (doc.category != "") {
 							let category: string = doc.category!;
 							let index = treeDocs.findIndex(
 								x => x.name == doc.category
@@ -83,7 +83,8 @@ export default new Vuex.Store({
 						} else if (doc.hasOwnProperty("parentId")) {
 							treeDocsAppendByID(doc.parentId!, treeDocs, doc);
 						}
-					});
+                    });
+                    console.log(treeDocs)
 					commit("setDocs", treeDocs);
 				});
 		}
