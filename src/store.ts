@@ -24,7 +24,8 @@ export default new Vuex.Store({
 		index: 0,
 		currentDocs: {
 			content: ""
-		}
+        },
+        isAdmin : false
 	},
 	mutations: {
 		setFlatDocs(state, data) {

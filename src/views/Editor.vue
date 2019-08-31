@@ -45,7 +45,7 @@ export default Vue.extend({
 		}
 	},
 	created() {
-		if (!this.getCurrentDocs._id) this.$router.replace("/");
+		if (!this.getCurrentDocs._id || !this.getIsAdmin) this.$router.replace("/");
 		this.text = this.getCurrentDocs.content as string;
 		this.parentSelect = this.getCurrentDocs.parentId as string;
 		this.category = this.getCurrentDocs.category as string;
@@ -76,6 +76,9 @@ export default Vue.extend({
 		ParentSelector
 	},
 	computed: {
+        getIsAdmin():boolean{
+            return this.$store.state.isAdmin
+        },
 		getCurrentContent(): string {
 			return marked(this.text);
 		},

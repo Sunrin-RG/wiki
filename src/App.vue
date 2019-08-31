@@ -1,5 +1,13 @@
 <template>
 	<div id="app">
+		<div class="admin" v-if="adminPopup">
+			AdminPassword :
+			<input
+				type="text"
+				v-model="adminPassword"
+				:class="{'admin-clear':getIsAdmin}"
+			/>
+		</div>
 		<header ref="top" class="topmenu">
 			<div class="topmenu__left">
 				<h1 class="topmenu__title">RG2R</h1>
@@ -40,7 +48,10 @@ export default Vue.extend({
 	watch: {
 		index(value) {
 			this.$store.state.index = value;
-		}
+        },
+        adminPassword(value){
+            this.$store.state.isAdmin = value == 'sunrin-rg'
+        }
 	},
 	mounted() {
 		var navigation: any = this.$refs.navigation;
@@ -51,6 +62,11 @@ export default Vue.extend({
 		var startX: number;
 		var endX: number;
 		var currentLeft = -innerWidth;
+		addEventListener("keypress", (e: KeyboardEvent) => {
+			if (e.code == "KeyQ" && e.ctrlKey) {
+				this.adminPopup = !this.adminPopup;
+			}
+		});
 		addEventListener("touchstart", e => {
 			startX = e.touches[0].clientX;
 			endX = startX;
@@ -78,10 +94,15 @@ export default Vue.extend({
 		return {
 			index: 0,
 			search: "",
-			isShowMenu: false
+			isShowMenu: false,
+			adminPopup: false,
+			adminPassword: ""
 		};
 	},
 	computed: {
+        getIsAdmin():boolean{
+            return this.$store.state.isAdmin
+        },
 		getComputedList(): any {
 			if (this.getList.length > 0) {
 				if (this.search.length != 0) {
@@ -320,5 +341,31 @@ input:hover {
 
 .mark {
 	background-color: yellow;
+}
+.admin {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+
+	background-color: #292a59;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+    color: white;
+}
+.admin input {
+	padding: 10px;
+	width: 200px;
+	background: none;
+	border: none;
+	border-bottom: 1px solid red;
+    outline: none;
+    color: white;
+}
+.admin-clear{
+    border-bottom: 1px solid green !important;
 }
 </style>
