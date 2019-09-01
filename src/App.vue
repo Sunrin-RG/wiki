@@ -1,13 +1,11 @@
 <template>
 	<div id="app">
-		<div class="admin" v-if="adminPopup">
-			AdminPassword :
-			<input
-				type="text"
-				v-model="adminPassword"
-				:class="{'admin-clear':getIsAdmin}"
-			/>
-		</div>
+		<transition name="fade">
+			<div class="admin" v-if="adminPopup">
+				AdminPassword :
+				<input type="text" v-model="adminPassword" :class="{'admin-clear':getIsAdmin}" :readonly="getIsAdmin"/>
+			</div>
+		</transition>
 		<header ref="top" class="topmenu">
 			<div class="topmenu__left">
 				<h1 class="topmenu__title">RG2R</h1>
@@ -48,10 +46,13 @@ export default Vue.extend({
 	watch: {
 		index(value) {
 			this.$store.state.index = value;
-        },
-        adminPassword(value){
-            this.$store.state.isAdmin = value == 'sunrin-rg'
-        }
+		},
+		adminPassword(value) {
+			if (value == "sunrin-rg") {
+				this.adminPopup = false;
+				this.$store.state.isAdmin = true;
+			}
+		}
 	},
 	mounted() {
 		var navigation: any = this.$refs.navigation;
@@ -100,9 +101,9 @@ export default Vue.extend({
 		};
 	},
 	computed: {
-        getIsAdmin():boolean{
-            return this.$store.state.isAdmin
-        },
+		getIsAdmin(): boolean {
+			return this.$store.state.isAdmin;
+		},
 		getComputedList(): any {
 			if (this.getList.length > 0) {
 				if (this.search.length != 0) {
@@ -354,7 +355,8 @@ input:hover {
 	justify-content: center;
 	align-items: center;
 
-    color: white;
+	color: white;
+	transition: 0.5s;
 }
 .admin input {
 	padding: 10px;
@@ -362,10 +364,18 @@ input:hover {
 	background: none;
 	border: none;
 	border-bottom: 1px solid red;
-    outline: none;
-    color: white;
+	outline: none;
+	color: white;
 }
-.admin-clear{
-    border-bottom: 1px solid green !important;
+.admin-clear {
+	border-bottom: 1px solid green !important;
+}
+.fade-enter,
+.fade-leave-to {
+	transform: translateY(-100%);
+}
+.fade-enter-to,
+.fade-leave {
+	transform: translateY(0);
 }
 </style>
