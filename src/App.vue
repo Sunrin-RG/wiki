@@ -3,7 +3,12 @@
 		<transition name="fade">
 			<div class="admin" v-if="adminPopup">
 				AdminPassword :
-				<input type="text" v-model="adminPassword" :class="{'admin-clear':getIsAdmin}" :readonly="getIsAdmin"/>
+				<input
+					type="text"
+					v-model="adminPassword"
+					:class="{'admin-clear':getIsAdmin}"
+					:readonly="getIsAdmin"
+				/>
 			</div>
 		</transition>
 		<header ref="top" class="topmenu">
@@ -24,6 +29,7 @@
 			<nav ref="navigation" class="navigation">
 				<input class="navigation__filter" type="text" placeholder="Filter by title" v-model="search" />
 				<tree-view class="navigation__list" :data="getComputedList" :search="search" />
+				<button class="navigation__create" v-if="getIsAdmin" @click="newDocs">새 항목 추가</button>
 			</nav>
 			<section class="content">
 				<router-view />
@@ -52,6 +58,15 @@ export default Vue.extend({
 				this.adminPopup = false;
 				this.$store.state.isAdmin = true;
 			}
+		}
+	},
+	methods: {
+		newDocs() {
+			this.$store.state.currentDocs = {
+				name: "NEW_TITLE",
+				content: "NEW_CONTENT"
+			};
+			this.$router.push("/edit");
 		}
 	},
 	mounted() {
@@ -287,6 +302,19 @@ input:hover {
 
 	overflow-y: scroll;
 	flex: 1;
+}
+.navigation__create {
+	border: none;
+	background: none;
+	border: 1px solid #292a59;
+	color: #292a59;
+	font-size: 1.2em;
+	margin: 5px;
+	transition: 0.5s;
+}
+.navigation__create:hover {
+	color: white;
+	background-color: #292a59;
 }
 .footer {
 	background: #292a59;

@@ -5,7 +5,7 @@
 			<input
 				v-model="category"
 				class="editor__category"
-				:disabled="parentSelect.length > 0"
+				:disabled="parentSelect != ''"
 				type="text"
 				placeholder="카테고리"
 			/>
@@ -18,7 +18,7 @@
 		</div>
 		<input class="editor__title" v-model="name" type="text" placeholder="제목" />
 		<textarea class="editor__field" v-model="text" placeholder="내용"></textarea>
-		<button class="editor__send" @click="send">EDIT</button>
+		<button class="editor__send" @click="send">{{this.getCurrentDocs._id ?'EDIT': 'CREATE'}}</button>
 	</div>
 </template>
 <script lang="ts">
@@ -26,7 +26,7 @@ import Vue from "vue";
 import ParentSelector from "@/components/ParentSelector.vue";
 import marked from "marked";
 import axios from "axios";
-import qs from 'qs';
+import qs from "qs";
 
 export default Vue.extend({
 	data() {
@@ -38,14 +38,15 @@ export default Vue.extend({
 		};
 	},
 	watch: {
-		parentSelect(value: string) {
-			if (value.length > 0) {
+		parentSelect(value: any) {
+			if (value != "") {
 				this.category = "";
 			}
 		}
 	},
 	created() {
-		if (!this.getCurrentDocs._id || !this.getIsAdmin) this.$router.replace("/");
+		if (!this.getCurrentDocs.name || !this.getIsAdmin)
+			this.$router.replace("/");
 		this.text = this.getCurrentDocs.content as string;
 		this.parentSelect = this.getCurrentDocs.parentId as string;
 		this.category = this.getCurrentDocs.category as string;
@@ -57,6 +58,7 @@ export default Vue.extend({
 			this.getCurrentDocs.category = this.category;
 			this.getCurrentDocs.name = this.name;
 			this.getCurrentDocs.content = this.text;
+
 			axios
 				.post(
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs-update",
@@ -68,17 +70,19 @@ export default Vue.extend({
 					}
 				)
 				.then(data => {
-					console.log(data.data);
-				});
+					this.$store.dispatch("GET_DOCS");
+					this.$router.replace("/");
+				})
+				.catch(err => {});
 		}
 	},
 	components: {
 		ParentSelector
 	},
 	computed: {
-        getIsAdmin():boolean{
-            return this.$store.state.isAdmin
-        },
+		getIsAdmin(): boolean {
+			return this.$store.state.isAdmin;
+		},
 		getCurrentContent(): string {
 			return marked(this.text);
 		},
@@ -112,6 +116,7 @@ export default Vue.extend({
 	height: 500px;
 }
 .editor__send {
+	cursor: pointer;
 	color: white;
 	border: none;
 	padding: 5px 20px;
