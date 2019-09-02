@@ -45,7 +45,6 @@ export default new Vuex.Store({
                     var docs: Doc[] = data.data;
 					commit("setFlatDocs", docs);
 					var treeDocs: DocTree[] = [];
-                    console.log(data.data)
 					function treeDocsAppendByID(
 						id: string,
 						parent: DocTree[],
