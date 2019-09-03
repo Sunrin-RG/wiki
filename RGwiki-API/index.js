@@ -37,7 +37,7 @@ exports.updateData = function(req, res) {
 		if (!id) {
 			key = datastore.key("docs");
 		} else {
-			key = datastore.key(["docs", id]);
+			key = datastore.key(["docs", datastore.int(id)]);
 			delete updateData._id;
 		}
 		datastore

@@ -5,7 +5,7 @@
 			<input
 				v-model="category"
 				class="editor__category"
-				:disabled="parentSelect != ''"
+				:disabled="parentSelect == ''"
 				type="text"
 				placeholder="카테고리"
 			/>
@@ -39,7 +39,7 @@ export default Vue.extend({
 	},
 	watch: {
 		parentSelect(value: any) {
-			if (value != "") {
+			if (value) {
 				this.category = "";
 			}
 		}
@@ -47,10 +47,10 @@ export default Vue.extend({
 	created() {
 		if (!this.getCurrentDocs.name || !this.getIsAdmin)
 			this.$router.replace("/");
-		this.text = this.getCurrentDocs.content as string;
-		this.parentSelect = this.getCurrentDocs.parentId as string;
-		this.category = this.getCurrentDocs.category as string;
-		this.name = this.getCurrentDocs.name as string;
+		this.text = this.getCurrentDocs.content;
+		this.parentSelect = this.getCurrentDocs.parentId;
+        this.category = this.getCurrentDocs.category;
+        this.name = this.getCurrentDocs.name;
 	},
 	methods: {
 		send() {
