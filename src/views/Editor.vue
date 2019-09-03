@@ -5,7 +5,7 @@
 			<input
 				v-model="category"
 				class="editor__category"
-				:disabled="parentSelect == ''"
+				:disabled="parentSelect"
 				type="text"
 				placeholder="카테고리"
 			/>
