@@ -4,6 +4,8 @@
 			<div class="admin" v-if="adminPopup">
 				AdminPassword :
 				<input
+					ref="adminInput"
+					id="adminInput"
 					type="text"
 					v-model="adminPassword"
 					:class="{'admin-clear':getIsAdmin}"
@@ -81,6 +83,11 @@ export default Vue.extend({
 		addEventListener("keypress", (e: KeyboardEvent) => {
 			if (e.code == "KeyQ" && e.ctrlKey) {
 				this.adminPopup = !this.adminPopup;
+				if (this.adminPopup) {
+					this.$nextTick(() => {
+						(this.$refs.adminInput as HTMLInputElement).focus();
+					});
+				}
 			}
 		});
 		addEventListener("touchstart", e => {
