@@ -43,6 +43,7 @@ exports.updateData = function(req, res) {
 		datastore
 			.upsert({
 				key: key,
+				excludeFromIndexes: ["content"],
 				data: updateData
 			})
 			.then(_ => {

@@ -58,7 +58,6 @@ export default Vue.extend({
 			this.getCurrentDocs.category = this.category;
 			this.getCurrentDocs.name = this.name;
 			this.getCurrentDocs.content = this.text;
-
 			axios
 				.post(
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs-update",
@@ -70,10 +69,13 @@ export default Vue.extend({
 					}
 				)
 				.then(data => {
+                    alert("성공")
 					this.$store.dispatch("GET_DOCS");
 					this.$router.replace("/");
 				})
-				.catch(err => {});
+				.catch(err => {
+                    alert("실패")
+                });
 		}
 	},
 	components: {
