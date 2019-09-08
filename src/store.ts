@@ -24,8 +24,8 @@ export default new Vuex.Store({
 		index: 0,
 		currentDocs: {
 			content: ""
-        },
-        isAdmin : false
+		},
+		isAdmin: false
 	},
 	mutations: {
 		setFlatDocs(state, data) {
@@ -42,7 +42,7 @@ export default new Vuex.Store({
 					"https://asia-east2-calcium-ratio-249108.cloudfunctions.net/getRG2RDocs"
 				)
 				.then((data: { data: Doc[] }) => {
-                    var docs: Doc[] = data.data;
+					var docs: Doc[] = data.data;
 					commit("setFlatDocs", docs);
 					var treeDocs: DocTree[] = [];
 					function treeDocsAppendByID(
@@ -56,6 +56,7 @@ export default new Vuex.Store({
 								ok = true;
 							}
 							if (x.hasOwnProperty("children")) {
+								console.log(doc.name, doc.parentId);
 								if (ok) x.children!.push(doc);
 								else treeDocsAppendByID(id, x.children!, doc);
 							} else {
@@ -64,7 +65,6 @@ export default new Vuex.Store({
 							}
 						});
 					}
-
 					docs.forEach((doc: Doc) => {
 						if (doc.category != "") {
 							let category: string = doc.category!;
@@ -80,10 +80,13 @@ export default new Vuex.Store({
 							} else {
 								treeDocs[index].children!.push(doc);
 							}
-						} else if (doc.hasOwnProperty("parentId")) {
+						}
+					});
+					docs.forEach((doc: Doc) => {
+						if (doc.hasOwnProperty("parentId")) {
 							treeDocsAppendByID(doc.parentId!, treeDocs, doc);
 						}
-                    });
+					});
 					commit("setDocs", treeDocs);
 				});
 		}
